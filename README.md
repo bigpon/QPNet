@@ -5,7 +5,7 @@
 ## Introduction
 The repository is the [QPNet](https://arxiv.org/abs/1907.00797) implementation with Pytorch.  
 
-The generated samples can be found in our [Demo]((https://bigpon.github.io/QuasiPeriodicWaveNet_demo)) page.  
+The generated samples can be found in our [Demo](https://bigpon.github.io/QuasiPeriodicWaveNet_demo) page.  
 
 The repository includes three parts:
 1. **Acoustic feature extraction**  
@@ -48,19 +48,19 @@ the folder for source code
 
 ### Corpus download:
 - Dowdlod the [Voice Conversion Challenge 2018](https://datashare.is.ed.ac.uk/handle/10283/3061) (VCC2018) corpus to run the QPNet example
->```bash
->$ cd QPNet/corpus/VCC2018/wav/
->
->$ wget -o train.log -O train.zip https://datashare.is.ed.ac.uk/bitstream/handle/10283/3061/vcc2018_database_training.zip
->
->$ wget -o eval.log -O eval.zip https://datashare.is.ed.ac.uk/bitstream/handle/10283/3061/vcc2018_database_evaluation.zip
->
->$ wget -o ref.log -O ref.zip https://datashare.is.ed.ac.uk/bitstream/handle/10283/3061/vcc2018_database_reference.zip
->
->$ unzip train.zip
->$ unzip eval.zip
->$ unzip ref.zip
->```
+```bash
+$ cd QPNet/corpus/VCC2018/wav/
+
+$ wget -o train.log -O train.zip https://datashare.is.ed.ac.uk/bitstream/handle/0283/3061/vcc2018_database_training.zip
+
+$ wget -o eval.log -O eval.zip https://datashare.is.ed.ac.uk/bitstream/handle/10283/061/vcc2018_database_evaluation.zip
+
+$ wget -o ref.log -O ref.zip https://datashare.is.ed.ac.uk/bitstream/handle/10283/061/vcc2018_database_reference.zip
+
+$ unzip train.zip
+$ unzip eval.zip
+$ unzip ref.zip
+```
 - **SI-QPNet training set**: `corpus/VCC2018/scp/vcc18tr.scp`  
 - **SD-QPNet updating set**: `corpus/VCC2018/scp/vcc18up_VCC2SPK.scp`  
 - **SD-QPNet validation set**: `corpus/VCC2018/scp/vcc18va_VCC2SPK.scp`  
@@ -68,53 +68,53 @@ the folder for source code
 
 ### Path setup:
 - Modify the corresponding CUDA and project root paths in `src/utils/param_path.py`
-> ``` bash 
-># move to the source code folder to run the following scripts
->$ cd QPNet/src/
-> ```  
+ ``` bash 
+# move to the source code folder to run the following scripts
+$ cd QPNet/src/
+ ```  
 
 ### Feature extraction:  
 1. Output the F0 and power distributions histogram figures to `corpus/VCC2018/hist/`  
-> ``` bash  
->$ bash run_FE.sh --stage 0
-> ```  
+ ``` bash  
+$ bash run_FE.sh --stage 0
+ ```  
 
 2. Modify the **f0_min** (*lower bound of F0 range*), **f0_max** (*upper bound of F0 range*), and **pow_th** (*power threshold for VAD*) values of the speakers in `corpus/VCC2018/conf/pow_f0_dict.yml`  
 *The F0 ranges setting details can be found [here](https://github.com/k2kobayashi/sprocket/blob/master/docs/vc_example.md).  
 
 3. Extract and save acoustic features of the training, evaluation, and reference sets in `corpus/VCC2018/h5/`   
 *The analysis-synthesis speech files of the training set are also saved in `corpus/VCC2018/h5_restored/`.
-> ``` bash 
->$ bash run_FE.sh --stage 123
-> ```  
+ ``` bash 
+$ bash run_FE.sh --stage 123
+ ```  
 
 4. Process waveform files by noise shaping for QPNet training and save the shaped files in `corpus/VCC2018/wav_h5_ns/`   
-> ``` bash
->$ bash run_FE.sh -stage 4 
-> ```
+ ``` bash
+$ bash run_FE.sh -stage 4 
+ ```
 
 ### QPNet vocoder:
 1. Train and test SI-QPNet   
-> ``` bash 
-># the gpu ID can be set by --gpu GPU_ID (default: 0)
->$ bash run_QP.sh --gpu 0 --stage 03
-> ```  
+ ``` bash 
+# the gpu ID can be set by --gpu GPU_ID (default: 0)
+$ bash run_QP.sh --gpu 0 --stage 03
+ ```  
 
 2. Update SD-QPNet for each speaker with the corresponding partial training data
-> ``` bash 
->$ bash run_QP.sh --gpu 0 --stage 1
-> ```  
+ ``` bash 
+$ bash run_QP.sh --gpu 0 --stage 1
+ ```  
 
 3. Validate SD-QPNet for each speaker with the corresponding partial training data
-> ``` bash 
->$ bash run_QP.sh --gpu 0 --stage 2
-> ```  
+ ``` bash 
+$ bash run_QP.sh --gpu 0 --stage 2
+ ```  
 
 4. Test SD-QPNet with the updating iteration number according to the validation results 
-> ``` bash 
-># the iter number can be set by --miter NUM (default: 1000)
->$ bash run_QP.sh --gpu 0 --miter 1000 --stage 4
-> ```  
+ ``` bash 
+# the iter number can be set by --miter NUM (default: 1000)
+$ bash run_QP.sh --gpu 0 --miter 1000 --stage 4
+ ```  
 
 ## Hints
 
