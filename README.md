@@ -144,7 +144,7 @@ Please cite the following article.
 
 ## ACKNOWLEDGEMENTS
 The QPNet repository is developed based on 
-- [Pytorch WaveNet]() implementation by [@kan-bayashi](https://github.com/kan-bayashi)
+- [Pytorch WaveNet](https://github.com/kan-bayashi/PytorchWaveNetVocoder) implementation by [@kan-bayashi](https://github.com/kan-bayashi)
 - [Voice conversion](https://github.com/k2kobayashi/sprocket) implementation by [@k2kobayashi](https://github.com/k2kobayashi)
 
 ## Author
