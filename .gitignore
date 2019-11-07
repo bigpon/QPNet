@@ -1,0 +1,37 @@
+# general
+*~
+*.pyc
+\#*\#
+.\#*
+*DS_Store
+out.txt
+parallel_wavegan.egg-info/
+doc/_build
+slurm-*.out
+tmp*
+.eggs/
+.hypothesis/
+.idea
+.backup/
+.pytest_cache/
+__pycache__/
+.coverage*
+coverage.xml*
+.vscode*
+.nfs*
+
+# corpus related
+corpus/*/wav
+corpus/*/wav_h5_ns
+corpus/*/h5
+corpus/*/h5_restored
+corpus/*/hist
+corpus/*/stats
+
+# qpnet related
+qpnet_models/*
+qpnet_output/*
+temp/
+
+# src related
+tempsrc/
