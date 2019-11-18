@@ -5,7 +5,7 @@
 ## Introduction
 The repository is the [QPNet](https://arxiv.org/abs/1907.00797) implementation with Pytorch.  
 
-The generated samples can be found in our [Demo](https://bigpon.github.io/QuasiPeriodicWaveNet_demo) page.  
+The generated samples can be found at our [Demo](https://bigpon.github.io/QuasiPeriodicWaveNet_demo) page.  
 
 The repository includes three parts:
 1. **Acoustic feature extraction**  

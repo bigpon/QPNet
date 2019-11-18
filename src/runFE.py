@@ -144,8 +144,9 @@ if __name__ == "__main__":
     # FEATURE STATISTIC
     if execute_steps[3]: 
         cmd = "python ./bin/calc_stats.py" + \
-            " --features " + feats + \
-            " --stats "    + stats
+            " --features "     + feats + \
+            " --feature_type " + str(feat_param.feature_type)+ \
+            " --stats "        + stats
         # print(cmd)
         os.system(cmd)
     

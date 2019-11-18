@@ -23,7 +23,7 @@ def calc_stats(file_list, args):
     # process over all of data
     for i, filename in enumerate(file_list):
         logging.info("now processing %s (%d/%d)" % (filename, i + 1, len(file_list)))
-        feat = read_hdf5(filename, "/world")
+        feat = read_hdf5(filename, "/%s" % args.feature_type)
         scaler.partial_fit(feat[:, 1:])
 
     # add uv term
@@ -40,15 +40,14 @@ def calc_stats(file_list, args):
 def main():
     parser = argparse.ArgumentParser()
 
-    parser.add_argument(
-        "--features", default=None, required=True,
-        help="name of the list of hdf5 files")
-    parser.add_argument(
-        "--stats", default=None, required=True,
-        help="filename of hdf5 format")
-    parser.add_argument(
-        "--verbose", default=1,
-        type=int, help="log message level")
+    parser.add_argument("--features", default=None, required=True,
+                        help="name of the list of hdf5 files")
+    parser.add_argument("--feature_type", default="world", choices=["world"],
+                        type=str, help="feature type")
+    parser.add_argument("--stats", default=None, required=True,
+                        help="filename of hdf5 format")
+    parser.add_argument("--verbose", default=1,
+                        type=int, help="log message level")
 
     args = parser.parse_args()
 

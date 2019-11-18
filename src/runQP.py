@@ -110,6 +110,8 @@ if __name__ == "__main__":
     # MODEL SETTING
     if args['-d'] is not None:
         dense_factor = np.int(args['-d'])
+    else:
+        dense_factor = 8
     aux_version     = os.path.basename(args['-a']).split(".")[0].split("-")[-1]
     wav_version     = os.path.basename(args['-w']).split(".")[0].split("-")[-1]
     model_version   = "A%s_W%s_d%d" % (aux_version, wav_version, dense_factor) # model name    
