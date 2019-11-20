@@ -155,6 +155,7 @@ if __name__ == "__main__":
         wavtype = 'ns'
         cmd = "python ./bin/noise_shaping.py" + \
             " --waveforms "      + waveforms + \
+            " --feature_type "   + str(feat_param.feature_type)+ \
             " --feature_format " + str(feat_format) + \
             " --wavtype "        + wavtype + \
             " --stats "          + stats + \

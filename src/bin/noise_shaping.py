@@ -34,6 +34,8 @@ def _get_arguments():
     parser.add_argument("--stats", default=None,
                         type=str, help="filename of hdf5 format")
     # acoustic feature setting
+    parser.add_argument("--feature_type", default="world",
+                        type=str, help="feature type")
     parser.add_argument("--feature_format", default="h5",
                         type=str, help="feature format")
     parser.add_argument("--wavtype", default='ns',
@@ -121,7 +123,7 @@ def noise_shaping(wav_list, wav_set, args):
         num_frames = f0.shape[0]
 
         # load average mcep
-        mlsa_coef = read_hdf5(args.stats, "/mean")
+        mlsa_coef = read_hdf5(args.stats, "/%s/mean" % args.feature_type)
         mlsa_coef = mlsa_coef[args.mcep_dim_start:args.mcep_dim_end] * args.mag
         mlsa_coef[0] = 0.0
         if args.inv:

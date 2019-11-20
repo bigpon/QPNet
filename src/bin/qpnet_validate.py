@@ -316,9 +316,6 @@ def main():
 
     # define network
     upsampling_factor = config.upsampling_factor
-    if upsampling_factor <= 0:
-        logging.warn("upsampling_factor should larger than 0!")
-        sys.exit(0)
     model = QPNet(
         n_quantize=config.n_quantize,
         n_aux=config.n_aux,
@@ -333,11 +330,7 @@ def main():
     logging.debug(model)  
     model.eval()
     criterion = nn.CrossEntropyLoss()
-    # load model
-    checkpoint = torch.load(args.checkpoint, map_location=lambda storage, loc: storage)
-    logging.info("load %s." % args.checkpoint)
-    model.load_state_dict(checkpoint["model"])
-
+    
     # setups for multi GPUs
     if args.n_gpus > 1:
         device_ids = range(args.n_gpus)
@@ -350,8 +343,8 @@ def main():
 
     # define transforms
     scaler = StandardScaler()
-    scaler.mean_ = read_hdf5(args.stats, "/mean")
-    scaler.scale_ = read_hdf5(args.stats, "/scale")
+    scaler.mean_ = read_hdf5(args.stats, "/%s/mean" % config.feature_type)
+    scaler.scale_ = read_hdf5(args.stats, "/%s/scale" % config.feature_type)
     wav_transform = transforms.Compose([
         lambda x: encode_mu_law(x, config.n_quantize)])
     feat_transform = transforms.Compose([
@@ -394,6 +387,14 @@ def main():
     # charge minibatch in queue
     while not generator.queue.full():
         time.sleep(0.1)
+    
+    # load model
+    checkpoint = torch.load(args.checkpoint, map_location=lambda storage, loc: storage)
+    logging.info("load %s." % args.checkpoint)
+    if args.n_gpus > 1:
+        model.module.load_state_dict(checkpoint["model"])
+    else:
+        model.load_state_dict(checkpoint["model"])
 
     # check gpu and then send to gpu
     if torch.cuda.is_available():

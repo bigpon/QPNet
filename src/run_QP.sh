@@ -36,7 +36,7 @@ fi
 if echo ${stage} | grep -q 2; then
     for spk in ${spospks[*]};
     do
-        echo "${spk} SD-QPNet updating."
+        echo "${spk} SD-QPNet validation."
         python runQP.py -g ${gpu} -f 22050 \
         -w vcc18tr.scp -a vcc18tr.scp \
         -x vcc18up_${spk}.scp -u vcc18up_${spk}.scp \

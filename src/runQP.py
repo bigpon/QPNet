@@ -318,6 +318,7 @@ if __name__ == "__main__":
                 " --stats "          + stats + \
                 " --outdir "         + outdir_eval + \
                 " --writedir "       + writedir + \
+                " --feature_type "   + str(feat_param.feature_type)+ \
                 " --feature_format " + feat_format + \
                 " --pow_adjust "     + str(pow_adjust) + \
                 " --fs "             + str(feat_param.fs) + \

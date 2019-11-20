@@ -374,30 +374,6 @@ def main():
         upsampling_factor=upsampling_factor)
     logging.debug(model)  
     model.train()
-    # define optimizer and loss
-    optimizer = torch.optim.Adam(
-        model.parameters(),
-        lr=args.lr,
-        weight_decay=args.weight_decay)
-    criterion = nn.CrossEntropyLoss()
-    # load model, optimizer and loss record
-    flossyml = args.expdir + "/loss-final.yml"
-    if os.path.exists(args.resume): # load uncompleted updated model to complete updating
-        checkpoint = torch.load(args.resume, map_location=lambda storage, loc: storage)
-        iterations = checkpoint["iterations"]
-        optimizer.load_state_dict(checkpoint["optimizer"])
-        logging.info("restored from %d-iter checkpoint." % iterations)
-        if os.path.exists(flossyml):
-            with open(flossyml, "r", encoding='utf-8') as yf:
-                loss_record = yaml.safe_load(yf)
-        else:
-            loss_record = []        
-    else: # load pretrained SI model for updating
-        checkpoint = torch.load(args.pretrain, map_location=lambda storage, loc: storage)
-        iterations = 0
-        logging.info("updating based on %s." % args.pretrain)
-        loss_record = []
-    model.load_state_dict(checkpoint["model"])
 
     # setups for multi GPUs 
     if args.n_gpus > 1:
@@ -408,16 +384,23 @@ def main():
         model.receptiveCausal_field = model.module.receptiveCausal_field
         if args.n_gpus > args.batch_size:
             logging.warn("batch size is less than number of gpus.")
+    
+    # define optimizer and loss
+    optimizer = torch.optim.Adam(
+        model.parameters(),
+        lr=args.lr,
+        weight_decay=args.weight_decay)
+    criterion = nn.CrossEntropyLoss()
 
     # define transforms
     scaler = StandardScaler()
-    scaler.mean_ = read_hdf5(args.stats, "/mean")
-    scaler.scale_ = read_hdf5(args.stats, "/scale")
+    scaler.mean_ = read_hdf5(args.stats, "/%s/mean" % config.feature_type)
+    scaler.scale_ = read_hdf5(args.stats, "/%s/scale" % config.feature_type)
     wav_transform = transforms.Compose([
         lambda x: encode_mu_law(x, config.n_quantize)])
     feat_transform = transforms.Compose([
         lambda x: scaler.transform(x)])
-
+    
     # define generator
     feat_ext = ".%s" % config.feature_format # feature file extension
     if os.path.isdir(args.waveforms):
@@ -457,6 +440,28 @@ def main():
     while not generator.queue.full():
         time.sleep(0.1)
 
+    # load model, optimizer and loss record
+    flossyml = args.expdir + "/loss-final.yml"
+    if os.path.exists(args.resume): # load uncompleted updated model to complete updating
+        checkpoint = torch.load(args.resume, map_location=lambda storage, loc: storage)
+        iterations = checkpoint["iterations"]
+        optimizer.load_state_dict(checkpoint["optimizer"])
+        logging.info("restored from %d-iter checkpoint." % iterations)
+        if os.path.exists(flossyml):
+            with open(flossyml, "r", encoding='utf-8') as yf:
+                loss_record = yaml.safe_load(yf)
+        else:
+            loss_record = []        
+    else: # load pretrained SI model for updating
+        checkpoint = torch.load(args.pretrain, map_location=lambda storage, loc: storage)
+        iterations = 0
+        logging.info("updating based on %s." % args.pretrain)
+        loss_record = []
+    if args.n_gpus > 1:
+        model.module.load_state_dict(checkpoint["model"])
+    else:
+        model.load_state_dict(checkpoint["model"])
+    
     # check gpu and then send to gpu
     if torch.cuda.is_available():
         model.cuda()
@@ -522,7 +527,7 @@ def main():
                    args.expdir + "/checkpoint-final.pkl")
     logging.info("final checkpoint created.")
     # save the loss record
-    with open(args.expdir + "/loss-final.yml", "w", encoding='utf-8') as yf:
+    with open(flossyml, "w", encoding='utf-8') as yf:
         yaml.safe_dump(loss_record, yf)
 
 

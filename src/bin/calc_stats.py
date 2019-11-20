@@ -33,8 +33,8 @@ def calc_stats(file_list, args):
     scale[1:] = scaler.scale_
 
     # write to hdf5
-    write_hdf5(args.stats, "/mean", mean)
-    write_hdf5(args.stats, "/scale", scale)
+    write_hdf5(args.stats, "/%s/mean" % args.feature_type, mean)
+    write_hdf5(args.stats, "/%s/scale" % args.feature_type, scale)
 
 
 def main():

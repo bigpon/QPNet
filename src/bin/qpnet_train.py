@@ -431,8 +431,8 @@ def main():
 
     # define transforms
     scaler = StandardScaler()
-    scaler.mean_ = read_hdf5(args.stats, "/mean")
-    scaler.scale_ = read_hdf5(args.stats, "/scale")
+    scaler.mean_ = read_hdf5(args.stats, "/%s/mean" % args.feature_type)
+    scaler.scale_ = read_hdf5(args.stats, "/%s/scale" % args.feature_type)
     wav_transform = transforms.Compose([
         lambda x: encode_mu_law(x, args.n_quantize)])
     feat_transform = transforms.Compose([
@@ -562,7 +562,7 @@ def main():
                    args.expdir + "/checkpoint-final.pkl")
     logging.info("final checkpoint created.")
     # save the loss record
-    with open(args.expdir + "/loss-final.yml", "w", encoding='utf-8') as yf:
+    with open(flossyml, "w", encoding='utf-8') as yf:
         yaml.safe_dump(loss_record, yf)
 
 
