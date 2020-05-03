@@ -151,7 +151,7 @@ if __name__ == "__main__":
     tempdir       = "%stemp/" % PRJ_DIR
     _path_initial([tempdir])    
     _path_check([corpus_dir, stats])
-    #LIST INITIALIZATION 
+    # LIST INITIALIZATION 
     def _get_list(auxlist, wavlist, modelver, setname):
         # get auxiliary feat list
         aux_feats = "%s%s%s_%sauxfeats.tmp" % (tempdir, COP, modelver, setname)

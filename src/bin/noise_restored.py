@@ -112,11 +112,11 @@ def noise_shaping(wav_list, args):
         x_ns = low_cut_filter(x_ns, args.fs, cutoff=70)
         write_name = args.writedir.replace("feat_id", feat_id)
         # check directory existence
+        wav = np.clip(x_ns, -32768, 32767)
         if wav_type == np.int16:
-            wav = np.clip(np.int16(x_ns), -32768, 32767)
+            wavfile.write(write_name, args.fs, np.int16(wav))
         else:
-            wav = np.clip(x_ns, -32768, 32767)
-        wavfile.write(write_name, args.fs, wav)
+            wavfile.write(write_name, args.fs, wav)
 
 
 def main():

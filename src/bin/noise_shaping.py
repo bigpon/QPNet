@@ -135,6 +135,7 @@ def noise_shaping(wav_list, wav_set, args):
             x, mlsa_coef, alpha=args.mcep_alpha)
         x_ns = low_cut_filter(x_ns, args.fs, cutoff=70)
         write_name = wav_name.replace("wav", wav_set).replace(".%s"%wav_set, ".wav")
+        x_ns = np.clip(x_ns, -32768, 32767)
         if wav_type == np.int16:
             wavfile.write(write_name, args.fs, np.int16(x_ns))
         else:

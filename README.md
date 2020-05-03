@@ -107,6 +107,7 @@ $ bash run_QP.sh --gpu 0 --stage 1
 
 3. Validate SD-QPNet for each speaker with the corresponding partial training data
  ``` bash 
+# the validation results are in `qpnet_models/modelname/validation_result.yml`
 $ bash run_QP.sh --gpu 0 --stage 2
  ```  
 

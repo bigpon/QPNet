@@ -314,8 +314,8 @@ def main():
             for feat_id, samples in zip(feat_ids, samples_list):
                 wav = decode_mu_law(samples, config.n_quantize)
                 wav_filename = args.outdir.replace("feat_id", feat_id)
-                wav = np.clip(np.int16(wav*32768), -32768, 32767)
-                wavfile.write(wav_filename, args.fs, wav)
+                wav = np.clip(wav*32768, -32768, 32767)
+                wavfile.write(wav_filename, args.fs, wav.astype(np.int16))
                 logging.info("wrote %s." % (wav_filename))
     
     # parallel decode

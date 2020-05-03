@@ -268,8 +268,8 @@ def world_speech_synthesis(queue, wav_list, args):
                                     mcep,
                                     ap,
                                     alpha=args.mcep_alpha)
-        wav = np.clip(np.int16(wav), -32768, 32767)
-        wavfile.write(restored_name, args.fs, wav)
+        wav = np.clip(wav, -32768, 32767)
+        wavfile.write(restored_name, args.fs, wav.astype(np.int16))
         #logging.info("wrote %s." % (restored_name))
     queue.put('Finish')
 
