@@ -53,9 +53,9 @@ $ cd QPNet/corpus/VCC2018/wav/
 
 $ wget -o train.log -O train.zip https://datashare.is.ed.ac.uk/bitstream/handle/0283/3061/vcc2018_database_training.zip
 
-$ wget -o eval.log -O eval.zip https://datashare.is.ed.ac.uk/bitstream/handle/10283/061/vcc2018_database_evaluation.zip
+$ wget -o eval.log -O eval.zip https://datashare.is.ed.ac.uk/bitstream/handle/10283/3061/vcc2018_database_evaluation.zip
 
-$ wget -o ref.log -O ref.zip https://datashare.is.ed.ac.uk/bitstream/handle/10283/061/vcc2018_database_reference.zip
+$ wget -o ref.log -O ref.zip https://datashare.is.ed.ac.uk/bitstream/handle/10283/3061/vcc2018_database_reference.zip
 
 $ unzip train.zip
 $ unzip eval.zip
