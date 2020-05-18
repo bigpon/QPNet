@@ -262,6 +262,7 @@ def main():
     scaler = StandardScaler()
     scaler.mean_ = read_hdf5(args.stats, "/%s/mean" % config.feature_type)
     scaler.scale_ = read_hdf5(args.stats, "/%s/scale" % config.feature_type)
+    scaler.n_features_in_ = scaler.mean_.shape[0]
     wav_transform = transforms.Compose([
         lambda x: encode_mu_law(x, config.n_quantize)])
     feat_transform = transforms.Compose([
