@@ -5,7 +5,7 @@
 ## Introduction
 The repository is the [QPNet](https://arxiv.org/abs/1907.00797) implementation with Pytorch.  
 
-The generated samples can be found at our [Demo](https://bigpon.github.io/QuasiPeriodicWaveNet_demo) page.  
+The generated samples can be found on our [Demo](https://bigpon.github.io/QuasiPeriodicWaveNet_demo) page.  
 
 The repository includes three parts:
 1. **Acoustic feature extraction**  
@@ -130,9 +130,15 @@ $ bash run_QP.sh --gpu 0 --miter 1000 --stage 4
 - When you create the wav file lists, please follow the form as the example  
 (ex: rootpath/wav/xxx/xxx.wav).
 
-## References
 
-Please cite the following article.
+## References
+The QPNet repository is developed based on 
+- [Pytorch WaveNet](https://github.com/kan-bayashi/PytorchWaveNetVocoder) implementation by [@kan-bayashi](https://github.com/kan-bayashi)
+- [Voice conversion](https://github.com/k2kobayashi/sprocket) implementation by [@k2kobayashi](https://github.com/k2kobayashi)
+
+## Citation
+
+If you find the code is helpful, please cite the following article.
 
 ```
 @inproceedings{wu2019qpnet,
@@ -143,14 +149,15 @@ Please cite the following article.
 }
 ```
 
-## ACKNOWLEDGEMENTS
-The QPNet repository is developed based on 
-- [Pytorch WaveNet](https://github.com/kan-bayashi/PytorchWaveNetVocoder) implementation by [@kan-bayashi](https://github.com/kan-bayashi)
-- [Voice conversion](https://github.com/k2kobayashi/sprocket) implementation by [@k2kobayashi](https://github.com/k2kobayashi)
+## Authors
 
-## Author
-Yi-Chiao Wu @ Nagoya University  
-E-mail: `yichiao.wu@g.sp.m.is.nagoya-u.ac.jp`
+Development:   
+Yi-Chiao Wu @ Nagoya University ([@bigpon](https://github.com/bigpon))  
+E-mail: `yichiao.wu@g.sp.m.is.nagoya-u.ac.jp`  
+
+Advisor:  
+Tomoki Toda @ Nagoya University  
+E-mail: `tomoki@icts.nagoya-u.ac.jp`
 
 
 
