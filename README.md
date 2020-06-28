@@ -142,10 +142,10 @@ If you find the code is helpful, please cite the following article.
 
 ```
 @inproceedings{wu2019qpnet,
-  title={Quasi-Periodic WaveNet vocoder: a pitch dependent dilated convolution model for parametric speech generation},
-  author={Wu, Yi-Chiao and Hayashi, Tomoki and Patrick Lumban, Tobing and Kobayashi, Kazuhiro and Toda, Tomoki},
-  booktitle={Proceedings of Interspeech},
-  year={2019}
+title={Quasi-Periodic WaveNet vocoder: a pitch dependent dilated convolution model for parametric speech generation},
+author={Wu, Yi-Chiao and Hayashi, Tomoki and Patrick Lumban, Tobing and Kobayashi, Kazuhiro and Toda, Tomoki},
+booktitle={Proceedings of Interspeech},
+year={2019}
 }
 ```
 
