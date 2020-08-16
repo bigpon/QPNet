@@ -21,7 +21,6 @@ coverage.xml*
 .nfs*
 
 # corpus related
-corpus/*/wav
 corpus/*/wav_h5_ns
 corpus/*/h5
 corpus/*/h5_restored
@@ -29,7 +28,6 @@ corpus/*/hist
 corpus/*/stats
 
 # qpnet related
-qpnet_models/*
 qpnet_output/*
 temp/
 
