@@ -145,6 +145,7 @@ $ bash run_QP.sh --gpu 0 --miter 1000 --stage 6
 - The pre-trained models and generated utterances are released.
 - You can download all pre-trained models via the [link](https://drive.google.com/drive/folders/1HghyuYG4V0_KTBwUB1KxwZtZuzzGVgCM?usp=sharing).
 - Please put the downloaded models in the `qpnet_models` folder.
+- The SD (speaker-dependent) models are adapted from the SI (speaker-independent) model.
 - You can download all generated utterances via the [link](https://drive.google.com/drive/folders/1VcoKBPk5kjvueE7oUsmbZUdalqxoCKeM?usp=sharing).
 - The released models are only trained with the vcc18 corpus (~ 1 hr). 
 - To achieve higher speech qualities, more training data is required. (In our papers, the training data was ~ 3 hrs)
