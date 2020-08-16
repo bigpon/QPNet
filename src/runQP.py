@@ -12,7 +12,7 @@ Usage: runQP.py -w WAVLIST -a AUXLIST
                 [-hmr] [-f FS]
                 [-x UPWAVLIST] [-u UPAUXLIST]
                 [-y VALIDWAVLIST] [-v VALIDAUXLIST] 
-                [-e EVALLIST]
+                [-e EVALLIST] [-F F0FACTOR]
                 [-g GPUID] [-n NETWORK] [-d DENSE]              
                 [-I ITER] [-U UITER] 
                 [-R RESUME] [-M MODEL]
@@ -29,6 +29,7 @@ Options:
     -y VALIDWAVLIST  The list of the validation waveform files
     -v VALIDAUXLIST  The list of the validation auxiliary features
     -e EVALLIST      The list of the evaluation features
+    -F F0FACTOR      The scaled factor of f0
     -f FS            The sampling rate
     -g GPUID         The GPU device ID
     -n NETWORK       The name of the network structure ('d4r4')
@@ -213,7 +214,7 @@ if __name__ == "__main__":
     
     
     # NETWORK ADAPTATION
-    if not args['--multi']:
+    if (not args['--multi']) and (execute_steps[2] or execute_steps[3]):
         if args['-u'] is None or args['-x'] is None:
             print("Please assign the updating auxilary list by '-u UPAUXLIST' " + \
                   " and the corresponding wav list by '-x UPWAVLIST' " + \
@@ -277,12 +278,18 @@ if __name__ == "__main__":
             print("Pleas assign the evaluation speaker.")
             sys.exit(0)
         testspk      = args['TESTSPK']
-        outdir_eval  = os.path.join(outdir, wav_mode, testspk, model_iters, "feat_id.wav")
+        outdir_eval  = os.path.join(outdir, wav_mode, testspk, model_iters)
         test_feats   = "%s%s%s_testfeats.tmp" % (tempdir, COP, model_version)
         tlist        = scp_dir + args['-e']
         keyword      = [synonym_root, "wav"]
         subword      = [corpus_dir, feat_format]
-        f0_factor    = 1.0 # f0 scaled factor (1.0 means unchanged)
+        if args['-F'] is None:
+            print("f0_factor default")
+            f0_factor = 1.0 # f0 scaled factor (1.0 means unchanged)
+            outdir_eval  = os.path.join(outdir_eval, "feat_id.wav")
+        else:
+            f0_factor = args['-F']
+            outdir_eval  = os.path.join(outdir_eval, "feat_id_%s.wav" % f0_factor)           
         extra_memory = False # set True will accelerate the decoding but consume lots of memory
         # speech decoding
         if execute_steps[3]:

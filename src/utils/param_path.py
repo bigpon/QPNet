@@ -7,7 +7,8 @@
 # PATH 
 LIBRARY_DIR = "/usr/local/cuda-10.0/lib64"
 CUDA_DIR    = "/usr/local/cuda-10.0"
-ROOT_DIR    = "/home/yourname/projects/"
+#ROOT_DIR    = "/home/yourname/projects/"
+ROOT_DIR    = "/home/yichiao17/VoiceConversion_nas01/"
 PRJ_DIR     = ROOT_DIR + "QPNet/"
 COP         = "VCC2018"
 COP_DIR     = "%scorpus/%s/" % (PRJ_DIR, COP)

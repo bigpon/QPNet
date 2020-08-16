@@ -7,12 +7,15 @@ stage=
 # stage 2: validation of SD-QPNet
 # stage 3: testing w/ SI-QPNet
 # stage 4: testing w/ SD-QPNet
+# stage 5: testing w/ SI-QPNet and scaled F0
+# stage 6: testing w/ SD-QPNet and scaled F0
 . parse_options.sh || exit 1;
 hubspks=("VCC2SF1" "VCC2SF2" "VCC2SM1" "VCC2SM2")
 spospks=("VCC2SF3" "VCC2SF4" "VCC2SM3" "VCC2SM4")
 srcspks=("${hubspks[@]}" "${spospks[@]}")
 tarspks=("VCC2TM1" "VCC2TM2" "VCC2TF1" "VCC2TF2")
 allspks=("${srcspks[@]}" "${tarspks[@]}")
+factors=("0.50" "1.50")
 
 # Speaker independent QPNet (SI-QPNet) training
 if echo ${stage} | grep -q 0; then
@@ -64,5 +67,34 @@ if echo ${stage} | grep -q 4; then
         -w vcc18tr.scp -a vcc18tr.scp \
         -x vcc18up_${spk}.scp -u vcc18up_${spk}.scp \
         -e vcc18eval_${spk}.scp -d 8 -3 -4 ${spk}
+    done
+fi
+
+# Decoding with SI-QPNet
+if echo ${stage} | grep -q 5; then
+    for spk in ${spospks[*]};
+    do
+        for factor in ${factors[*]};
+        do
+            echo "${spk} SI-QPNet decoding w/ f0 ${factor}."
+            python runQP.py -m -g ${gpu} -f 22050 -F ${factor} \
+            -w vcc18tr.scp -a vcc18tr.scp \
+            -e vcc18eval_${spk}.scp -d 8 -3 -4 ${spk}
+        done
+    done
+fi
+
+# Decoding with SD-QPNet
+if echo ${stage} | grep -q 6; then
+    for spk in ${spospks[*]};
+    do
+        for factor in ${factors[*]};
+        do
+            echo "${spk} SD-QPNet decoding w/ f0 ${factor}."
+            python runQP.py -g ${gpu} -f 22050 -M ${miter} -F ${factor} \
+            -w vcc18tr.scp -a vcc18tr.scp \
+            -x vcc18up_${spk}.scp -u vcc18up_${spk}.scp \
+            -e vcc18eval_${spk}.scp -d 8 -3 -4 ${spk}
+        done
     done
 fi
