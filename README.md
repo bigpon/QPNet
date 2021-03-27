@@ -3,7 +3,7 @@
 # Quasi-Periodic WaveNet (QPNet)
 
 ## Introduction
-The repository is the official QPNet [[1](https://arxiv.org/abs/1907.00797), [2](https://arxiv.org/abs/2007.05663)] implementation with Pytorch.  
+The repository is the official QPNet [[1](https://arxiv.org/abs/1907.00797), [2](https://ieeexplore.ieee.org/document/9361096)] implementation with Pytorch.  
 
 The generated samples can be found on our [Demo](https://bigpon.github.io/QuasiPeriodicWaveNet_demo) page.  
 
@@ -224,19 +224,21 @@ If you find the code is helpful, please cite the following papers.
 ```
 @InProceedings{qpnet_2019,
 author="Y.-C. Wu and T. Hayashi and P. L. Tobing and K. Kobayashi and T. Toda",
-title="Quasi-periodic {W}ave{N}et vocoder: A pitch dependent dilated convolution model for parametric speech generation",
+title="{Q}uasi-{P}eriodic {W}ave{N}et vocoder: a pitch dependent dilated convolution model for parametric speech generation",
 booktitle="Proc. Interspeech",
 year="2019",
 month="Sept.",
 pages="196-200"
 }
 
-@Article{qpnet_2020,
+@ARTICLE{qpnet_2021,
 author="Y.-C. Wu and T. Hayashi and P. L. Tobing and K. Kobayashi and T. Toda",
-title="Quasi-periodic {W}ave{N}et: An autoregressive raw waveform generative model with pitch-dependent dilated convolution neural network",
-journal="IEEE/ACM Transactions on Audio, Speech, and Language Processing", 
-year="(submitted)"
-}
+journal={IEEE/ACM Transactions on Audio, Speech, and Language Processing}, 
+title={Quasi-Periodic WaveNet: An Autoregressive Raw Waveform Generative Model With Pitch-Dependent Dilated Convolution Neural Network}, 
+year={2021},
+volume={29},
+pages={1134-1148},
+doi={10.1109/TASLP.2021.3061245}}
 ```
 
 ## Authors
